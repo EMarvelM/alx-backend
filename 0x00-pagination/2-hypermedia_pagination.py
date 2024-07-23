@@ -57,7 +57,7 @@ class Server:
         i = index_range(page, page_size)
         total_pages = math.ceil(len(self.__dataset) / page_size)
 
-        return {
+        result = {
             "page_size": page_size,
             "page": page,
             "data": self.dataset()[i[0]: i[1]],
@@ -65,6 +65,9 @@ class Server:
             "prev_page": page - 1 if i[0] - 1 < total_pages else None,
             "total_pages": total_pages
         }
+        if result.get("prev_page") == 0:
+            result["prev_page"] = None
+        return result
 
 
 def index_range(page: int, page_size: int) -> Tuple:
