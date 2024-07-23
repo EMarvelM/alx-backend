@@ -40,20 +40,30 @@ class Server:
         return self.__indexed_dataset
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
-        if not index: return
+        if not index:
+            return
         assert(index <= math.ceil(len(self.__indexed_dataset) / page_size))
-        i = 0
-        new_obj = {}
-        while True:
-            for j in range(len(self.__indexed_dataset)):
-                if self.__indexed_dataset.get(j):
-                    i += 1
-                    new_obj.update({ i : self.__indexed_dataset.get(j)})
-            break
+        # i = 0
+        # new_obj = {}
+        # while True:
+        #     for j in range(len(self.__indexed_dataset)):
+        #         if self.__indexed_dataset.get(j):
+        #             i += 1
+        #             new_obj.update({ i : self.__indexed_dataset.get(j)})
+        #     break
+        data = []
+        for i in range(index, page_size + index):
+            if self.__indexed_dataset.get(i):
+                data += self.__indexed_dataset.get(i)
+                next_page = index + page_size
+                if not self.__indexed_dataset.get(i - 1):
+                    next_page = index + page_size + 1
+            else:
+                data += self.__indexed_dataset.get(i + 2)
+
         return {
             "index": index,
-            "data": [new_obj.get(i) for i in range(index+1, page_size + index+1)],
-            "next_index": index + page_size,
+            "data": data,
+            "next_index": next_page,
             "page_size": page_size
         }
-        
