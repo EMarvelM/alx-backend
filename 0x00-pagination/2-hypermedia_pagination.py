@@ -61,12 +61,10 @@ class Server:
             "page_size": len(self.dataset()[i[0]: i[1]]),
             "page": page,
             "data": self.dataset()[i[0]: i[1]],
-            "next_page": page + 1 if i[1] + 1 < total_pages else None,
-            "prev_page": page - 1 if i[0] - 1 < total_pages else None,
+            "next_page": page + 1 if i[1] + 1 < len(self.dataset()) else None,
+            "prev_page": page - 1 if page > 1 else None,
             "total_pages": total_pages
         }
-        if result.get("prev_page") == 0:
-            result["prev_page"] = None
         return result
 
 
