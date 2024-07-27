@@ -5,6 +5,8 @@ from base_caching import BaseCaching
 
 
 class BasicCache(BaseCaching):
+    """ class for caching
+    """
     def __init__(self):
         """
         Initialize the class
