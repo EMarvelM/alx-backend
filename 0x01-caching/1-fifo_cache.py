@@ -5,7 +5,13 @@ from base_caching import BaseCaching
 
 
 class FIFOCache(BaseCaching):
+    """
+    First In First Out Caching class
+    """
     def __init__(self):
+        """
+        Initialize the class
+        """
         super().__init__()
 
     def put(self, key, item):
